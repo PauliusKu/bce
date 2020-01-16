@@ -1,29 +1,33 @@
 # Create your models here.
 from django.db import models
 
-# the following lines added:
-import datetime
-from django.utils import timezone
 
-class Question(models.Model):
-   question_text = models.CharField(max_length=200)
-   pub_date = models.DateTimeField('date published')
+class Block(models.Model):
+    hash = models.CharField(max_length=64)
+    confirmations = models.IntegerField()
+    timestamp = models.DateTimeField()
+    height = models.BigIntegerField()
+    numOfTrx = models.IntegerField()
+    difficulty = models.DecimalField(decimal_places=2, max_digits=12)
+    merkleRoot = models.CharField(max_length=64)
+    version = models.CharField(max_length=64)
+    bits = models.BigIntegerField()
+    weight = models.BigIntegerField()
+    size = models.BigIntegerField()
+    nonce = models.BigIntegerField()
 
-   def __str__(self):
-       return self.question_text
 
-   def was_published_recently(self):
-       now = timezone.now()
-       return now - datetime.timedelta(days=1) <= self.pub_date <= now
+class Tx(models.Model):
+    hash = models.CharField(max_length=64)
+    timestamp = models.DateTimeField()
+    size = models.BigIntegerField()
+    weight = models.BigIntegerField()
+    blockHash = models.CharField(max_length=64)
+    confirmations = models.IntegerField()
 
-   was_published_recently.admin_order_field = 'pub_date'
-   was_published_recently.boolean = True
-   was_published_recently.short_description = 'Published recently?'
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.DO_NOTHING,)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.choice_text
+class Payload(object):
+    def __init__(self, action, method, data):
+        self.action = action
+        self.method = method
+        self.data = data

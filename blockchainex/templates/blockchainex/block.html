@@ -1,0 +1,21 @@
+{% extends "blockchainex/base.html" %}
+{% block content %}
+    {% for block in oneBlock %}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Hash</td>
+                    <td>{{ block.hash }}</td>
+                </tr>
+                <tr>
+                    <td>nTx</td>
+                    <td>{{ block.nTx }}</td>
+                </tr>
+                <tr>
+                    <td>height</td>
+                    <td>{{ block.height }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock content %}

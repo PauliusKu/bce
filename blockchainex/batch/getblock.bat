@@ -1,0 +1,1 @@
+plink -ssh user029@158.129.140.201 -P 3637 "python /home/user029/blockback/src/getBlock.py hash %1 %2"
